@@ -34,7 +34,16 @@ a group of physical servers (hosts) that are connected together and work as one 
 -----
 **In Proxmos**
 The Proxmox VE cluster manager **pvecm** is a tool to create a group of physical servers. Such a group is called a cluster. We use the Corosync Cluster Engine for reliable group communication. There’s no explicit limit for the number of nodes in a cluster. In practice, the actual possible node count may be limited by the host and network performance. Currently (2021), there are reports of clusters (using high-end enterprise hardware) with over 50 nodes in production.
+
 -----
 
 **what is **ZFS** File System**
+(Zettabyte file system) a modern, advanced file system + volume manager designed to keep data safe, consistent, and easy to manage—even at huge scale.
 
+**why it is special**
+-->ZFS uses checksums on all data.
+- Every block is verified when read
+- If corruption is detected, ZFS automatically repairs it (when redundancy exists)
+- This protects against bit rot, silent corruption, bad RAM, flaky disks
+
+**file system and volume manager in one**
