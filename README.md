@@ -86,3 +86,7 @@ curl -k -d 'username=root@pam' --data-urlencode 'password=xxxxxxxx' https://10.0
 
 *Safer variant with the password in a file only readable for the user:*
 curl -k -d 'username=root@pam' --data-urlencode "password@$HOME/.pve-pass-file" https://10.0.0.1:8006/api2/json/access/ticket
+
+**Api Tokens**
+-> API tokens allow stateless access to most parts of the REST API by another system, software or API client. Tokens can be generated for individual users and can be given separate permissions and expiration dates to limit the scope and duration of the access. Should the API token get compromised it can be revoked without disabling the user itself.
+- To use an API token, set the HTTP Authorization header value to the form of PVEAPIToken=USER@REALM!TOKENID=UUID when making API requests, or refer to your API client documentation.
