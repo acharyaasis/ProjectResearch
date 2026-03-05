@@ -90,3 +90,40 @@ curl -k -d 'username=root@pam' --data-urlencode "password@$HOME/.pve-pass-file" 
 **Api Tokens**
 -> API tokens allow stateless access to most parts of the REST API by another system, software or API client. Tokens can be generated for individual users and can be given separate permissions and expiration dates to limit the scope and duration of the access. Should the API token get compromised it can be revoked without disabling the user itself.
 - To use an API token, set the HTTP Authorization header value to the form of PVEAPIToken=USER@REALM!TOKENID=UUID when making API requests, or refer to your API client documentation.
+
+
+
+**Cluster Manager**
+- The Proxmox VE cluster manager pvecm is a tool to create a group of physical servers. Such a group is called a cluster. We use the Corosync Cluster Engine for reliable group communication.
+-  In practice, the actual possible node count may be limited by the host and network performance.
+- pvecm can be used to create a new cluster, join nodes to a cluster, leave the cluster, get status information, and do various other cluster-related tasks.
+- The Proxmox Cluster File System (“pmxcfs”) is used to transparently distribute the cluster configuration to all cluster nodes.
+
+**Grouping Nodes into Cluster has the following advantages**
+- Centeralized web-bashed management 
+- Multi-Master cluster: each node can do all management task.
+- use of *pmxcfs*, a database driven file system for storing configuring files replicated in realtime on all node using corosync.
+- Easy migration of virtual machines and containers between physical hosts.
+- fast deployement.
+- Cluster-wide services like firewall and HA.
+
+**Requirements**
+- all node must be able to connect to each other via UDP ports 5405-5412 for corosync to work.
+- Date and time must be syncronized.
+- An ssh tunnel in TCP port 22 between nodes is required.
+ 
+**Corosync**
+ - It is an open-source cluster engine and messaging layer designed to implement high availability (HA) in Linux environments. It provides the necessary infrastructure for multiple servers (nodes) to act as a unified, coordinated group.
+ - It is commonly paired with Pacemaker, where Corosync manages the communication and node membership, while Pacemaker manages the services (resources) running on those nodes.
+
+**Task of Corosync (Core Responsibilities)**
+- Corosync acts as the underlying communication system that ensures reliable, ordered, and fast messaging between nodes.
+1. *Cluster membership Management*: Corosync maintains an up-to-date, shared view of which nodes are active in the cluster. It detects when a node joins or leaves (fails) the cluster.
+2. *Heartbeat Signaling*: It monitor Node health by sending heartbeat signals to detect network failure and node crashes almost instantely.
+3. *Quorum Enforcement*: Corosync implements quorum rules, ensuring that the cluster only operates if a majority of nodes are present. This prevents "split-brain" scenarios where two halves of a cluster act independently
+4. *Relaible Messaging*: It provides a closed group communication model, broadcasting identical messages to all nodes in a specific, consistent order.
+
+
+
+**Container Create Using the API**
+
